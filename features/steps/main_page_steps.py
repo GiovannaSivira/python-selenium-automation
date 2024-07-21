@@ -8,34 +8,27 @@ CLICK_CRT =(By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 
 @given('Open target main page')
 def open_target(context):
-    context.driver.get('https://www.target.com/')
+    context.app.main_page.open()
 
 
 @when('Search for {product}')
 def search_product(context, product):
-    # find search field and enter text
-    context.driver.find_element(By.ID, 'search').send_keys(product)
-    # click search
-    context.driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']").click()
-    # wait for the page with search results to load
-    # sleep(6)
+    context.app.header.search()
     context.driver.wait.until(EC.presence_of_element_located(CLICK_CRT))
 
 
 @when('Click on Cart icon')
 def click_cart(context):
-    context.driver.find_element(*CLICK_CRT).click()
+    context.app.header.click_cart()
 
 @then('Verify search results shown for {expected_product}')
 def verify_search_results(context, expected_product):
-    actual_text = context.driver.find_element(By.XPATH, "//div[@data-test='resultsHeading']").text
-    assert expected_product in actual_text, f'Expected {expected_product} not in actual {actual_text}'
-
+   context.app.search_results_page.verify_text()
 
 @then('Verify correct search results URL opens for {expected_product}')
 def verify_url(context, expected_product):
-    url = context.driver.current_url
-    assert expected_product in url, f'Expected {expected_product} not in {url}'
+  context.app.search_results_page.verify_url()
+
 @then('Verify header in shown')
 def verify_header_present(context):
     context.driver.find_element(By.CSS_SELECTOR, "[class*='utilityHeaderContainer']")
