@@ -9,16 +9,11 @@ def open_target(context):
 
 @when('Click Sign in from right side navigation menu')
 def click_signin(context):
-    context.driver.find_element(By.CSS_SELECTOR, "a[data-test='@web/AccountLink']").click()
-    # sleep(6)
-    context.driver.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "a[data-test='accountNav-signIn']")))
+    context.app.header.click_signin_from_navigation_menu()
+
 
 @then("Verify Sign In form opened")
 def verify_signIn(context):
-    context.driver.find_element(By.CSS_SELECTOR, "a[data-test='accountNav-signIn']").click()
+    context.app.sign_in_page.verify_sign_in_form_opened()
 
-    expected_text = 'Sign into your Target account'
-    actual_text = context.driver.find_element(By.CSS_SELECTOR, "h1[class*='sc-fe064f5c-0']").text
 
-    assert expected_text in actual_text, f'Expected {expected_text} is not in actual text {actual_text}'
-    print('Test case passed')

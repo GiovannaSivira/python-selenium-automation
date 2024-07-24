@@ -13,7 +13,7 @@ def open_target(context):
 
 @when('Search for {product}')
 def search_product(context, product):
-    context.app.header.search()
+    context.app.header.search(product)
     context.driver.wait.until(EC.presence_of_element_located(CLICK_CRT))
 
 
@@ -23,11 +23,11 @@ def click_cart(context):
 
 @then('Verify search results shown for {expected_product}')
 def verify_search_results(context, expected_product):
-   context.app.search_results_page.verify_text()
+   context.app.search_results_page.verify_search_results(expected_product)
 
 @then('Verify correct search results URL opens for {expected_product}')
 def verify_url(context, expected_product):
-  context.app.search_results_page.verify_url()
+  context.app.search_results_page.verify_product_in_url(expected_product)
 
 @then('Verify header in shown')
 def verify_header_present(context):
