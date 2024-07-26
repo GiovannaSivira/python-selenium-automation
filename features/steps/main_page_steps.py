@@ -6,9 +6,9 @@ from time import sleep
 
 CLICK_CRT =(By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 
-@given('Open target main page')
-def open_target(context):
-    context.app.main_page.open()
+# @given('Open target main page')
+# def open_target(context):
+#     context.app.main_page.open()
 
 
 @when('Search for {product}')
